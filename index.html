@@ -3,70 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <title>Para a Garota que Eu Mais Amo</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300&display=swap" rel="stylesheet">
 
 <style>
 body {
     margin: 0;
     height: 100vh;
-    background: radial-gradient(circle at center, #111 0%, #000 70%);
+    background: linear-gradient(135deg, #000000, #111111, #000000);
+    background-size: 400% 400%;
+    animation: backgroundMove 15s ease infinite;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Poppins', sans-serif;
     color: white;
     overflow: hidden;
 }
 
+@keyframes backgroundMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 #container {
     text-align: center;
-    max-width: 800px;
-    padding: 30px;
+    max-width: 850px;
+    padding: 40px;
 }
 
 #titulo {
-    font-size: 40px;
-    font-weight: 600;
+    font-family: 'Playfair Display', serif;
+    font-size: 46px;
     opacity: 0;
-    transition: opacity 2s ease;
-    text-shadow: 0 0 15px rgba(255,255,255,0.5);
+    transition: opacity 3s ease;
+    text-shadow: 0 0 25px rgba(255,255,255,0.4);
 }
 
 #playButton {
-    font-size: 70px;
-    width: 130px;
-    height: 130px;
+    margin-top: 50px;
+    font-size: 65px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.6);
+    border: 2px solid rgba(255,255,255,0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 40px auto 0 auto;
+    margin-left: auto;
+    margin-right: auto;
     cursor: pointer;
-    transition: 0.4s ease;
-    animation: pulse 2s infinite;
+    transition: 0.5s ease;
+    animation: pulse 3s infinite;
     opacity: 0;
 }
 
 #playButton:hover {
-    background: white;
-    color: black;
-    transform: scale(1.1);
+    transform: scale(1.15);
+    box-shadow: 0 0 40px rgba(255,255,255,0.6);
 }
 
 @keyframes pulse {
-    0% { box-shadow: 0 0 0px rgba(255,255,255,0.2); }
-    50% { box-shadow: 0 0 25px rgba(255,255,255,0.6); }
-    100% { box-shadow: 0 0 0px rgba(255,255,255,0.2); }
+    0% { box-shadow: 0 0 10px rgba(255,255,255,0.1); }
+    50% { box-shadow: 0 0 35px rgba(255,255,255,0.6); }
+    100% { box-shadow: 0 0 10px rgba(255,255,255,0.1); }
 }
 
 #mensagem {
-    margin-top: 50px;
-    font-size: 32px;
-    line-height: 1.6;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 60px;
+    font-size: 34px;
+    line-height: 1.8;
     opacity: 0;
-    text-shadow: 0 0 10px rgba(255,255,255,0.4);
-    min-height: 160px;
+    min-height: 200px;
+    text-shadow: 0 0 18px rgba(255,255,255,0.5);
+    transition: opacity 2s ease;
 }
 </style>
 </head>
@@ -93,22 +103,22 @@ const titulo = document.getElementById("titulo");
 window.onload = () => {
     setTimeout(() => {
         titulo.style.opacity = 1;
-    }, 500);
+    }, 800);
 
     setTimeout(() => {
         playButton.style.opacity = 1;
-    }, 2500);
+    }, 3500);
 };
 
 playButton.addEventListener("click", async () => {
     try {
         await musica.play();
         playButton.style.display = "none";
-        titulo.style.opacity = 0.4;
+        titulo.style.opacity = 0.3;
         mensagem.style.opacity = 1;
-        escreverTexto(texto, 45);
-    } catch (erro) {
-        alert("Toque novamente para iniciar ❤️");
+        escreverTexto(texto, 65); // mais devagar aqui
+    } catch {
+        alert("Toque novamente ❤️");
     }
 });
 
