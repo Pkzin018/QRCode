@@ -2,8 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Para o meu amor</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+<title>Para a Garota que Eu Mais Amo</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
 
 <style>
 body {
@@ -24,6 +24,14 @@ body {
     padding: 30px;
 }
 
+#titulo {
+    font-size: 40px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 2s ease;
+    text-shadow: 0 0 15px rgba(255,255,255,0.5);
+}
+
 #playButton {
     font-size: 70px;
     width: 130px;
@@ -33,10 +41,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: auto;
+    margin: 40px auto 0 auto;
     cursor: pointer;
     transition: 0.4s ease;
     animation: pulse 2s infinite;
+    opacity: 0;
 }
 
 #playButton:hover {
@@ -58,7 +67,6 @@ body {
     opacity: 0;
     text-shadow: 0 0 10px rgba(255,255,255,0.4);
     min-height: 160px;
-    transition: opacity 2s ease;
 }
 </style>
 </head>
@@ -66,6 +74,7 @@ body {
 <body>
 
 <div id="container">
+    <div id="titulo">Para a Garota que Eu Mais Amo</div>
     <div id="playButton">▶</div>
     <div id="mensagem"></div>
 </div>
@@ -79,11 +88,23 @@ const texto = "Eu vou te pedir perdão todos os dias, eu vou te mostrar todos os
 const mensagem = document.getElementById("mensagem");
 const playButton = document.getElementById("playButton");
 const musica = document.getElementById("musica");
+const titulo = document.getElementById("titulo");
+
+window.onload = () => {
+    setTimeout(() => {
+        titulo.style.opacity = 1;
+    }, 500);
+
+    setTimeout(() => {
+        playButton.style.opacity = 1;
+    }, 2500);
+};
 
 playButton.addEventListener("click", async () => {
     try {
         await musica.play();
         playButton.style.display = "none";
+        titulo.style.opacity = 0.4;
         mensagem.style.opacity = 1;
         escreverTexto(texto, 45);
     } catch (erro) {
