@@ -3,53 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <title>Para o meu amor</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
 <style>
 body {
     margin: 0;
-    background-color: #000;
-    color: white;
     height: 100vh;
+    background: radial-gradient(circle at center, #111 0%, #000 70%);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
+    color: white;
     overflow: hidden;
 }
 
 #container {
     text-align: center;
-    max-width: 700px;
-    padding: 20px;
+    max-width: 800px;
+    padding: 30px;
 }
 
 #playButton {
-    font-size: 60px;
-    cursor: pointer;
-    border: 2px solid white;
+    font-size: 70px;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
+    border: 2px solid rgba(255,255,255,0.6);
     display: flex;
     justify-content: center;
     align-items: center;
     margin: auto;
-    transition: 0.3s;
+    cursor: pointer;
+    transition: 0.4s ease;
+    animation: pulse 2s infinite;
 }
 
 #playButton:hover {
-    background-color: white;
+    background: white;
     color: black;
+    transform: scale(1.1);
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0px rgba(255,255,255,0.2); }
+    50% { box-shadow: 0 0 25px rgba(255,255,255,0.6); }
+    100% { box-shadow: 0 0 0px rgba(255,255,255,0.2); }
 }
 
 #mensagem {
-    font-size: 28px;
-    margin-top: 40px;
+    margin-top: 50px;
+    font-size: 32px;
+    line-height: 1.6;
     opacity: 0;
+    text-shadow: 0 0 10px rgba(255,255,255,0.4);
+    min-height: 160px;
     transition: opacity 2s ease;
-    min-height: 120px;
 }
 </style>
 </head>
+
 <body>
 
 <div id="container">
@@ -57,7 +70,7 @@ body {
     <div id="mensagem"></div>
 </div>
 
-<audio id="musica" loop>
+<audio id="musica" loop preload="auto">
   <source src="musica.mp3" type="audio/mpeg">
 </audio>
 
@@ -67,11 +80,15 @@ const mensagem = document.getElementById("mensagem");
 const playButton = document.getElementById("playButton");
 const musica = document.getElementById("musica");
 
-playButton.addEventListener("click", () => {
-    musica.play();
-    playButton.style.display = "none";
-    mensagem.style.opacity = 1;
-    escreverTexto(texto, 40);
+playButton.addEventListener("click", async () => {
+    try {
+        await musica.play();
+        playButton.style.display = "none";
+        mensagem.style.opacity = 1;
+        escreverTexto(texto, 45);
+    } catch (erro) {
+        alert("Toque novamente para iniciar ❤️");
+    }
 });
 
 function escreverTexto(texto, velocidade) {
