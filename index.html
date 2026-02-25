@@ -29,9 +29,9 @@ video {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    text-align: center;
+    width: 80%;
     max-width: 900px;
-    padding: 40px;
+    text-align: center;
 }
 
 #playButton {
@@ -54,13 +54,28 @@ video {
     100% { box-shadow: 0 0 10px rgba(255,255,255,0.2); }
 }
 
-.mensagem {
-    font-size: 34px;
+.frase-centro {
+    font-size: 36px;
     line-height: 1.8;
+    min-height: 120px;
+    transition: all 1.5s ease;
+}
+
+.frase-lateral {
+    font-size: 22px;
+    opacity: 0.4;
+    transform: translateX(-120%);
+    text-align: left;
+    margin: 15px 0;
+    transition: all 1.5s ease;
+}
+
+.final {
+    font-size: 48px;
+    margin-top: 40px;
     opacity: 0;
-    min-height: 220px;
-    text-shadow: 0 0 20px rgba(255,255,255,0.6);
-    transition: opacity 2s ease;
+    text-shadow: 0 0 30px rgba(255,255,255,0.9);
+    transition: opacity 3s ease, transform 3s ease;
 }
 </style>
 </head>
@@ -73,43 +88,83 @@ video {
 
 <div id="overlay">
     <div id="playButton">▶</div>
-    <div id="mensagem" class="mensagem"></div>
+    <div id="centro" class="frase-centro"></div>
+    <div id="historico"></div>
+    <div id="final" class="final"></div>
 </div>
 
 <script>
-const texto = 
-"Eu sei que falhei.\n\n" +
-"Sei que às vezes não fui o homem que você merecia.\n\n" +
-"Mas todos os dias eu acordo querendo ser melhor por nós.\n\n" +
-"Eu vou te pedir perdão quantas vezes for preciso.\n\n" +
-"Vou provar com atitudes, não só palavras.\n\n" +
-"Porque eu te amo de verdade.\n\n\n" +
-"Eu prometo te amar com mais cuidado.\n\n" +
-"Te proteger com mais presença.\n\n" +
-"E ser, todos os dias, o seu melhor amigo.";
 
-const mensagem = document.getElementById("mensagem");
+const frases = [
+"Eu sei que falhei.",
+"Sei que às vezes não fui o homem que você merecia.",
+"Mas todos os dias eu acordo querendo ser melhor por nós.",
+"Eu vou te pedir perdão quantas vezes for preciso.",
+"Vou provar com atitudes, não só palavras.",
+"Porque eu te amo de verdade.",
+"Eu prometo te amar com mais cuidado.",
+"Te proteger com mais presença.",
+"E ser, todos os dias, o seu melhor amigo."
+];
+
+const fraseFinal = "Eu escolho você. Hoje. Amanhã. E todos os dias da minha vida.";
+
+const centro = document.getElementById("centro");
+const historico = document.getElementById("historico");
+const final = document.getElementById("final");
 const playButton = document.getElementById("playButton");
 const video = document.getElementById("bgVideo");
 
 playButton.addEventListener("click", () => {
     video.play();
     playButton.style.display = "none";
-    mensagem.style.opacity = 1;
-    escreverTexto(texto, 90); // mais lento aqui
+    mostrarFrases(0);
 });
 
-function escreverTexto(texto, velocidade) {
+function mostrarFrases(index) {
+    if (index >= frases.length) {
+        setTimeout(() => {
+            final.innerText = fraseFinal;
+            final.style.opacity = 1;
+            final.style.transform = "scale(1.05)";
+        }, 2000);
+        return;
+    }
+
+    centro.innerHTML = "";
+    escrever(frases[index], centro, 80, () => {
+
+        let lateral = document.createElement("div");
+        lateral.className = "frase-lateral";
+        lateral.innerText = frases[index];
+
+        historico.appendChild(lateral);
+
+        setTimeout(() => {
+            lateral.style.transform = "translateX(0)";
+        }, 100);
+
+        setTimeout(() => {
+            mostrarFrases(index + 1);
+        }, 2000);
+
+    });
+}
+
+function escrever(texto, elemento, velocidade, callback) {
     let i = 0;
     function digitar() {
         if (i < texto.length) {
-            mensagem.innerHTML += texto.charAt(i) === "\n" ? "<br>" : texto.charAt(i);
+            elemento.innerHTML += texto.charAt(i);
             i++;
             setTimeout(digitar, velocidade);
+        } else {
+            callback();
         }
     }
     digitar();
 }
+
 </script>
 
 </body>
