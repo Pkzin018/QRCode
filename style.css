@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(45%);
+    transition: filter 2s ease;
+}
+
+#overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 900px;
+    text-align: center;
+}
+
+#playButton {
+    font-size: 70px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    cursor: pointer;
+    animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 10px rgba(255,255,255,0.2); }
+    50% { box-shadow: 0 0 40px rgba(255,255,255,0.7); }
+    100% { box-shadow: 0 0 10px rgba(255,255,255,0.2); }
+}
+
+#centro {
+    font-size: 36px;
+    line-height: 1.8;
+    min-height: 120px;
+    margin-top: 30px;
+}
+
+.frase-lateral {
+    font-size: 22px;
+    opacity: 0.4;
+    transform: translateX(-120%);
+    text-align: left;
+    margin: 15px 0;
+    transition: all 1.5s ease;
+}
+
+#historico {
+    transition: opacity 2s ease;
+}
+
+#final {
+    font-size: 52px;
+    margin-top: 40px;
+    opacity: 0;
+    transform: scale(0.8);
+    text-shadow: 0 0 40px rgba(255,255,255,0.9);
+    transition: opacity 2.5s ease, transform 2.5s ease;
+}
+
+#final.show {
+    opacity: 1;
+    transform: scale(1.1);
+    animation: heartbeat 3s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1.1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1.1); }
+}
