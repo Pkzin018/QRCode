@@ -3,79 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <title>Para a Garota que Eu Mais Amo</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@300&display=swap" rel="stylesheet">
 
 <style>
 body {
     margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #000000, #111111, #000000);
-    background-size: 400% 400%;
-    animation: backgroundMove 15s ease infinite;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
     overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    color: white;
 }
 
-@keyframes backgroundMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(40%);
 }
 
-#container {
+#overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
-    max-width: 850px;
+    max-width: 900px;
     padding: 40px;
 }
 
 #titulo {
     font-family: 'Playfair Display', serif;
-    font-size: 46px;
+    font-size: 48px;
+    margin-bottom: 40px;
     opacity: 0;
-    transition: opacity 3s ease;
-    text-shadow: 0 0 25px rgba(255,255,255,0.4);
+    transition: opacity 2s ease;
 }
 
-#playButton {
-    margin-top: 50px;
-    font-size: 65px;
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    transition: 0.5s ease;
-    animation: pulse 3s infinite;
-    opacity: 0;
-}
-
-#playButton:hover {
-    transform: scale(1.15);
-    box-shadow: 0 0 40px rgba(255,255,255,0.6);
-}
-
-@keyframes pulse {
-    0% { box-shadow: 0 0 10px rgba(255,255,255,0.1); }
-    50% { box-shadow: 0 0 35px rgba(255,255,255,0.6); }
-    100% { box-shadow: 0 0 10px rgba(255,255,255,0.1); }
-}
-
-#mensagem {
-    font-family: 'Poppins', sans-serif;
-    margin-top: 60px;
+.mensagem {
     font-size: 34px;
     line-height: 1.8;
     opacity: 0;
+    text-shadow: 0 0 20px rgba(255,255,255,0.6);
     min-height: 200px;
-    text-shadow: 0 0 18px rgba(255,255,255,0.5);
     transition: opacity 2s ease;
 }
 </style>
@@ -83,52 +55,47 @@ body {
 
 <body>
 
-<div id="container">
+<video id="bgVideo" autoplay muted playsinline>
+  <source src="video.mp4" type="video/mp4">
+</video>
+
+<div id="overlay">
     <div id="titulo">Para a Garota que Eu Mais Amo</div>
-    <div id="playButton">▶</div>
-    <div id="mensagem"></div>
+    <div id="mensagem1" class="mensagem"></div>
+    <div id="mensagem2" class="mensagem"></div>
 </div>
 
-<audio id="musica" loop preload="auto">
-  <source src="musica.mp3" type="audio/mpeg">
-</audio>
-
 <script>
-const texto = "Eu vou te pedir perdão todos os dias, eu vou te mostrar todos os dias.\n\nEu te amo muito, eu te amo mais que muito.";
-const mensagem = document.getElementById("mensagem");
-const playButton = document.getElementById("playButton");
-const musica = document.getElementById("musica");
+const texto1 = "Eu vou te pedir perdão todos os dias, eu vou te mostrar todos os dias.\n\nEu te amo muito, eu te amo mais que muito.";
+const texto2 = "Eu Prometo te Amar, cuidar e ser seu melhor amigo para todo o sempre.";
+
 const titulo = document.getElementById("titulo");
+const mensagem1 = document.getElementById("mensagem1");
+const mensagem2 = document.getElementById("mensagem2");
 
 window.onload = () => {
     setTimeout(() => {
         titulo.style.opacity = 1;
-    }, 800);
+    }, 1000);
 
     setTimeout(() => {
-        playButton.style.opacity = 1;
+        mensagem1.style.opacity = 1;
+        escreverTexto(texto1, mensagem1, 60);
     }, 3500);
 };
 
-playButton.addEventListener("click", async () => {
-    try {
-        await musica.play();
-        playButton.style.display = "none";
-        titulo.style.opacity = 0.3;
-        mensagem.style.opacity = 1;
-        escreverTexto(texto, 65); // mais devagar aqui
-    } catch {
-        alert("Toque novamente ❤️");
-    }
-});
-
-function escreverTexto(texto, velocidade) {
+function escreverTexto(texto, elemento, velocidade) {
     let i = 0;
     function digitar() {
         if (i < texto.length) {
-            mensagem.innerHTML += texto.charAt(i) === "\n" ? "<br>" : texto.charAt(i);
+            elemento.innerHTML += texto.charAt(i) === "\n" ? "<br>" : texto.charAt(i);
             i++;
             setTimeout(digitar, velocidade);
+        } else {
+            setTimeout(() => {
+                mensagem2.style.opacity = 1;
+                escreverTexto(texto2, mensagem2, 70);
+            }, 2500);
         }
     }
     digitar();
