@@ -5,38 +5,87 @@
 <title>Para o meu amor</title>
 <style>
 body {
+    margin: 0;
     background-color: #000;
     color: white;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    text-align: center;
     font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+#container {
+    text-align: center;
+    max-width: 700px;
     padding: 20px;
 }
-.mensagem {
+
+#playButton {
+    font-size: 60px;
+    cursor: pointer;
+    border: 2px solid white;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    transition: 0.3s;
+}
+
+#playButton:hover {
+    background-color: white;
+    color: black;
+}
+
+#mensagem {
     font-size: 28px;
-    max-width: 600px;
+    margin-top: 40px;
+    opacity: 0;
+    transition: opacity 2s ease;
+    min-height: 120px;
 }
 </style>
 </head>
 <body>
 
-<div class="mensagem">
-Eu vou te pedir perdão todos os dias, eu vou te mostrar todos os dias.
-<br><br>
-Eu te amo muito, eu te amo mais que muito.
+<div id="container">
+    <div id="playButton">▶</div>
+    <div id="mensagem"></div>
 </div>
 
 <audio id="musica" loop>
   <source src="musica.mp3" type="audio/mpeg">
 </audio>
 
-<button onclick="document.getElementById('musica').play()">
-Clique aqui ❤️
-</button>
+<script>
+const texto = "Eu vou te pedir perdão todos os dias, eu vou te mostrar todos os dias.\n\nEu te amo muito, eu te amo mais que muito.";
+const mensagem = document.getElementById("mensagem");
+const playButton = document.getElementById("playButton");
+const musica = document.getElementById("musica");
+
+playButton.addEventListener("click", () => {
+    musica.play();
+    playButton.style.display = "none";
+    mensagem.style.opacity = 1;
+    escreverTexto(texto, 40);
+});
+
+function escreverTexto(texto, velocidade) {
+    let i = 0;
+    function digitar() {
+        if (i < texto.length) {
+            mensagem.innerHTML += texto.charAt(i) === "\n" ? "<br>" : texto.charAt(i);
+            i++;
+            setTimeout(digitar, velocidade);
+        }
+    }
+    digitar();
+}
+</script>
 
 </body>
-
 </html>
