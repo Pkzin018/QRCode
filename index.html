@@ -3,81 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Para a Garota que Eu Mais Amo</title>
+<link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@300&display=swap" rel="stylesheet">
-
-<style>
-body {
-    margin: 0;
-    overflow: hidden;
-    font-family: 'Poppins', sans-serif;
-    color: white;
-}
-
-video {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
-    filter: brightness(45%);
-}
-
-#overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    max-width: 900px;
-    text-align: center;
-}
-
-#playButton {
-    font-size: 70px;
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    border: 2px solid white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    cursor: pointer;
-    animation: pulse 3s infinite;
-}
-
-@keyframes pulse {
-    0% { box-shadow: 0 0 10px rgba(255,255,255,0.2); }
-    50% { box-shadow: 0 0 40px rgba(255,255,255,0.7); }
-    100% { box-shadow: 0 0 10px rgba(255,255,255,0.2); }
-}
-
-.frase-centro {
-    font-size: 36px;
-    line-height: 1.8;
-    min-height: 120px;
-    transition: all 1.5s ease;
-}
-
-.frase-lateral {
-    font-size: 22px;
-    opacity: 0.4;
-    transform: translateX(-120%);
-    text-align: left;
-    margin: 15px 0;
-    transition: all 1.5s ease;
-}
-
-.final {
-    font-size: 48px;
-    margin-top: 40px;
-    opacity: 0;
-    text-shadow: 0 0 30px rgba(255,255,255,0.9);
-    transition: opacity 3s ease, transform 3s ease;
-}
-</style>
 </head>
 
 <body>
@@ -88,84 +15,11 @@ video {
 
 <div id="overlay">
     <div id="playButton">▶</div>
-    <div id="centro" class="frase-centro"></div>
+    <div id="centro"></div>
     <div id="historico"></div>
-    <div id="final" class="final"></div>
+    <div id="final"></div>
 </div>
 
-<script>
-
-const frases = [
-"Eu sei que falhei.",
-"Sei que às vezes não fui o homem que você merecia.",
-"Mas todos os dias eu acordo querendo ser melhor por nós.",
-"Eu vou te pedir perdão quantas vezes for preciso.",
-"Vou provar com atitudes, não só palavras.",
-"Porque eu te amo de verdade.",
-"Eu prometo te amar com mais cuidado.",
-"Te proteger com mais presença.",
-"E ser, todos os dias, o seu melhor amigo."
-];
-
-const fraseFinal = "Eu escolho você. Hoje. Amanhã. E todos os dias da minha vida.";
-
-const centro = document.getElementById("centro");
-const historico = document.getElementById("historico");
-const final = document.getElementById("final");
-const playButton = document.getElementById("playButton");
-const video = document.getElementById("bgVideo");
-
-playButton.addEventListener("click", () => {
-    video.play();
-    playButton.style.display = "none";
-    mostrarFrases(0);
-});
-
-function mostrarFrases(index) {
-    if (index >= frases.length) {
-        setTimeout(() => {
-            final.innerText = fraseFinal;
-            final.style.opacity = 1;
-            final.style.transform = "scale(1.05)";
-        }, 2000);
-        return;
-    }
-
-    centro.innerHTML = "";
-    escrever(frases[index], centro, 80, () => {
-
-        let lateral = document.createElement("div");
-        lateral.className = "frase-lateral";
-        lateral.innerText = frases[index];
-
-        historico.appendChild(lateral);
-
-        setTimeout(() => {
-            lateral.style.transform = "translateX(0)";
-        }, 100);
-
-        setTimeout(() => {
-            mostrarFrases(index + 1);
-        }, 2000);
-
-    });
-}
-
-function escrever(texto, elemento, velocidade, callback) {
-    let i = 0;
-    function digitar() {
-        if (i < texto.length) {
-            elemento.innerHTML += texto.charAt(i);
-            i++;
-            setTimeout(digitar, velocidade);
-        } else {
-            callback();
-        }
-    }
-    digitar();
-}
-
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
